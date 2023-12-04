@@ -20,6 +20,8 @@ const OUTPUT_FILE_PATH = githubActions.getInput('output_file_path', {
   required: false,
 })
 
+githubActions.info('Exclude prefix: ' + EXCLUDE_PREFIX)
+
 const directDependencies = DIRECT_DEPENDENCIES_ONLY ? [...Object.keys(packageJSON.dependencies), ...Object.keys(packageJSON.devDependencies)] : null
 
 const getLicenses = () =>
@@ -41,6 +43,7 @@ const getLicenses = () =>
 const stripPackageVersion = (packageName) => packageName.replace(/@\d+\.\d+\.\d+/, '')
 
 getLicenses().then((packages) => {
+  githubActions.info(`Extracted license data for ${Object.keys(packages).length} packages`)
   const licenceInfo = Object.keys(packages)
     .filter((packageName) => EXCLUDE_PREFIX ? !packageName.startsWith(EXCLUDE_PREFIX) : true)
     .filter((packageName) => directDependencies ? directDependencies.includes(stripPackageVersion(packageName)) : true)
@@ -49,7 +52,7 @@ getLicenses().then((packages) => {
       filteredPackages[packageName] = packages[packageName]
       return filteredPackages
     }, {})
-  githubActions.info(Object.keys().length + ' packages with extracted data')
+  githubActions.info(Object.keys(licenceInfo).length + ' packages with extracted data')
   githubActions.info('Writing license data to ' + OUTPUT_FILE_PATH)
   fs.writeFileSync(
     OUTPUT_FILE_PATH,
