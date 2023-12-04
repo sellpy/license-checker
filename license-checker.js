@@ -16,6 +16,10 @@ const OMIT_PACKAGE_VERSIONS = githubActions.getInput('omit_package_versions', {
   required: false,
 })
 
+const OUTPUT_FILE_PATH = githubActions.getInput('output_file_path', {
+  required: false,
+})
+
 const directDependencies = DIRECT_DEPENDENCIES_ONLY ? [...Object.keys(packageJSON.dependencies), ...Object.keys(packageJSON.devDependencies)] : null
 
 const getLicenses = () =>
@@ -46,8 +50,9 @@ getLicenses().then((packages) => {
       return filteredPackages
     }, {})
   fs.writeFileSync(
-    'packages-license-info.json',
+    OUTPUT_FILE_PATH,
     JSON.stringify(licenceInfo, null, 2)
   )
+  githubActions.setOutput('packages_license_data_file_path', OUTPUT_FILE_PATH);
 })
 

@@ -13,6 +13,15 @@ inputs:
     type: 'boolean'
     description: 'omit package versions in output'
     required: false
+  output_file_path:
+    type: 'string'
+    description: 'path to output file (needs to use file extension .json)'
+    required: false
+    default: 'packages-license-info.json'
+  outputs:
+    packages_license_data_file_path:
+      type: 'string'
+      description: 'path to output file'
 runs:
   using: 'node20'
   main: 'dist/index.js'
