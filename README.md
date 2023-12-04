@@ -9,7 +9,7 @@ This action extracts licence information for all installed packages. It is confi
 Place in a `.yml` file such as this one in your `.github/workflows` folder. [Refer to the documentation on workflow YAML syntax here.](https://help.github.com/en/articles/workflow-syntax-for-github-actions)
 
 ```yaml
-name: Upload to S3
+name: Extract license data
 
 on: [pull_request]
 
