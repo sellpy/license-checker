@@ -51449,10 +51449,8 @@ getLicenses().then((packages) => {
   }
   if (DIRECT_DEPENDENCIES_ONLY) {
     const pathToPackageJSON = path.join(process.env.GITHUB_WORKSPACE, 'package.json')
-    githubActions.info(`Reading "${pathToPackageJSON}"`)
     const packageJSON = JSON.parse(fs.readFileSync(pathToPackageJSON))
     const directDependencies = [...Object.keys(packageJSON.dependencies), ...Object.keys(packageJSON.devDependencies)]
-    githubActions.info(`${directDependencies.length} ${JSON.stringify(packageJSON, null, 2)}`)
     packageNames = packageNames.filter((packageName) => directDependencies.includes(stripPackageVersion(packageName)))
     githubActions.info(`Only including direct dependencies. ${packageNames.length} packages remaining.`, )
   }
