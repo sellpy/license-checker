@@ -49,12 +49,12 @@ getLicenses().then((packages) => {
       filteredPackages[packageName] = packages[packageName]
       return filteredPackages
     }, {})
+  githubActions.info(Object.keys().length + ' packages with extracted data')
+  githubActions.info('Writing license data to ' + OUTPUT_FILE_PATH)
   fs.writeFileSync(
     OUTPUT_FILE_PATH,
     JSON.stringify(licenceInfo, null, 2)
   )
-  githubActions.info(Object.keys().length + ' packages with extracted data')
-  githubActions.info('Writing license data to ' + OUTPUT_FILE_PATH)
   githubActions.setOutput('packages_license_data_file_path', OUTPUT_FILE_PATH);
 })
 
