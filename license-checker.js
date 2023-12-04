@@ -21,7 +21,7 @@ const OUTPUT_FILE_PATH = githubActions.getInput('output_file_path', {
 const pathToPackageJSON = path.join(process.env.GITHUB_WORKSPACE, 'package.json')
 
 githubActions.info(`Reading "${pathToPackageJSON}"`)
-const packageJSON = JSOn.parse(fs.readFileSync(pathToPackageJSON))
+const packageJSON = JSON.parse(fs.readFileSync(pathToPackageJSON))
 
 const directDependencies = [...Object.keys(packageJSON.dependencies), ...Object.keys(packageJSON.devDependencies)]
 githubActions.info(`${directDependencies.length} ${JSON.stringify(packageJSON, null, 2)}`)
