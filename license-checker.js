@@ -2,7 +2,7 @@ const fs = require('fs')
 const githubActions = require('@actions/core')
 const path = require('path')
 const checker = require('license-checker-rseidelsohn')
-const packageJSON = require('./package.json'))
+const packageJSON = require('./package.json')
 
 const EXCLUDE_PREFIX = githubActions.getInput('exclude_prefix', {
   required: false,

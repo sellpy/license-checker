@@ -51438,7 +51438,7 @@ const getLicenses = () =>
   new Promise((resolve, reject) => {
     checker.init(
       {
-        start: process.cwd(),
+        start: './',
       },
       (err, packages) => {
         if (err) {
