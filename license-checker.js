@@ -21,6 +21,7 @@ const OUTPUT_FILE_PATH = githubActions.getInput('output_file_path', {
 })
 
 const directDependencies = [...Object.keys(packageJSON.dependencies), ...Object.keys(packageJSON.devDependencies)]
+githubActions.info(`${directDependencies.length} ${JSON.stringify(packageJSON, null, 2)}`)
 
 const getLicenses = () =>
   new Promise((resolve, reject) => {
