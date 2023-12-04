@@ -51415,6 +51415,8 @@ const path = __nccwpck_require__(1017)
 const checker = __nccwpck_require__(5344)
 const packageJSON = __nccwpck_require__(4147)
 
+githubActions.info(`${process.env.GITHUB_WORKSPACE}`)
+
 const EXCLUDE_PREFIX = githubActions.getInput('exclude_prefix', {
   required: false,
 })
