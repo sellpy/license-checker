@@ -1,0 +1,18 @@
+name: License Checker
+description: 'Check and export package licence data for installed packages'
+inputs:
+  exclude_prefix:
+    type: 'string'
+    description: 'exclude packages from license check by giving a prefix'
+    required: false
+  direct_dependencies_only:
+    type: 'boolean'
+    description: 'only include direct dependencies'
+    required: false
+  omit_package_versions:
+    type: 'boolean'
+    description: 'omit package versions in output'
+    required: false
+runs:
+  using: 'node20'
+  main: 'dist/index.js'

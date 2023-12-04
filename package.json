@@ -1,0 +1,26 @@
+{
+  "name": "license-checker",
+  "version": "1.0.0",
+  "description": "Github action to check and export license data for installed packages.",
+  "main": "s3-upload.js",
+  "scripts": {
+    "package": "ncc build license-checker.js -o dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sellpy/license-checker.git"
+  },
+  "author": "Sellpy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sellpy/license-checker/issues"
+  },
+  "homepage": "https://github.com/sellpy/license-checker#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "license-checker-rseidelsohn": "^4.2.11"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.1"
+  }
+}
