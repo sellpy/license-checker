@@ -20,7 +20,6 @@ inputs:
     default: 'packages-license-info.json'
   outputs:
     packages_license_data_file_path:
-      type: 'string'
       description: 'path to output file'
 runs:
   using: 'node20'
