@@ -51413,8 +51413,6 @@ const fs = __nccwpck_require__(7147)
 const githubActions = __nccwpck_require__(2186)
 const path = __nccwpck_require__(1017)
 const checker = __nccwpck_require__(5344)
-githubActions.info('START')
-githubActions.info('cwd: ' + process.cwd())
 const packageJSON = __nccwpck_require__(4147)
 
 const EXCLUDE_PREFIX = githubActions.getInput('exclude_prefix', {
@@ -51433,9 +51431,7 @@ const OUTPUT_FILE_PATH = githubActions.getInput('output_file_path', {
   required: false,
 })
 
-githubActions.info('Exclude prefix: ' + EXCLUDE_PREFIX)
-
-const directDependencies = DIRECT_DEPENDENCIES_ONLY ? [...Object.keys(packageJSON.dependencies), ...Object.keys(packageJSON.devDependencies)] : null
+const directDependencies = [...Object.keys(packageJSON.dependencies), ...Object.keys(packageJSON.devDependencies)]
 
 const getLicenses = () =>
   new Promise((resolve, reject) => {
@@ -51457,16 +51453,22 @@ const stripPackageVersion = (packageName) => packageName.replace(/@\d+\.\d+\.\d+
 
 getLicenses().then((packages) => {
   githubActions.info(`Extracted license data for ${Object.keys(packages).length} packages`)
-  const licenceInfo = Object.keys(packages)
-    .filter((packageName) => EXCLUDE_PREFIX ? !packageName.startsWith(EXCLUDE_PREFIX) : true)
-    .filter((packageName) => directDependencies ? directDependencies.includes(stripPackageVersion(packageName)) : true)
-    .reduce((filteredPackages, packageName) => {
-      packageName = OMIT_PACKAGE_VERSIONS ? stripPackageVersion(packageName) : packageName
-      filteredPackages[packageName] = packages[packageName]
+  let packageNames = Object.keys(packages)
+  if (EXCLUDE_PREFIX) {
+    githubActions.info('Excluding packages with prefix:' + EXCLUDE_PREFIX)
+    packageNames = packageNames.filter((packageName) => !packageName.startsWith(EXCLUDE_PREFIX))
+  }
+  if (DIRECT_DEPENDENCIES_ONLY) {
+    githubActions.info('Only including direct dependencies')
+    packageNames = packageNames.filter((packageName) => directDependencies.includes(stripPackageVersion(packageName)))
+  }
+  const licenceInfo = packageNames.reduce((filteredPackages, packageName) => {
+      const outputPackageName = OMIT_PACKAGE_VERSIONS ? stripPackageVersion(packageName) : packageName
+      filteredPackages[outputPackageName] = packages[packageName]
       return filteredPackages
     }, {})
-  githubActions.info(Object.keys(licenceInfo).length + ' packages with extracted data')
-  githubActions.info('Writing license data to ' + OUTPUT_FILE_PATH)
+  githubActions.info(`Compiled package licence data for ${Object.keys(licenceInfo).length} packages`)
+  githubActions.info('Writing packages license data to ' + OUTPUT_FILE_PATH)
   fs.writeFileSync(
     OUTPUT_FILE_PATH,
     JSON.stringify(licenceInfo, null, 2)
