@@ -57,12 +57,17 @@ getLicenses().then((packages) => {
       return filteredPackages
     }, {})
   githubActions.info(`Compiled packages licence data for ${Object.keys(licenceInfo).length} packages`)
-  githubActions.info('Writing packages license data to ' + OUTPUT_FILE_PATH)
-  fs.writeFileSync(
-    OUTPUT_FILE_PATH,
-    JSON.stringify(licenceInfo, null, 2)
-  )
-  githubActions.setOutput('packages_license_data_file_path', OUTPUT_FILE_PATH);
+  if (OUTPUT_FILE_PATH) {
+    githubActions.info('Writing packages license data to ' + OUTPUT_FILE_PATH)
+    fs.writeFileSync(
+      OUTPUT_FILE_PATH,
+      JSON.stringify(licenceInfo, null, 2)
+    )
+    githubActions.setOutput('packages_license_data_file_path', OUTPUT_FILE_PATH)
+  } else {
+    githubActions.info(`Outputting packages license data as json string to variable "packages_license_data"`)
+    githubActions.setOutput('packages_license_data', JSON.stringify(licenceInfo, null, 2))
+  }
 })
 .catch((error) => {
   githubActions.setFailed(error.message)

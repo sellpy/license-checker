@@ -17,10 +17,11 @@ inputs:
     type: 'string'
     description: 'path to output file (needs to use file extension .json)'
     required: false
-    default: 'packages-license-info.json'
   outputs:
     packages_license_data_file_path:
       description: 'path to output file'
+    packages_license_data:
+      description: 'json stringified license data for all packages'
 runs:
   using: 'node20'
   main: 'dist/index.js'
