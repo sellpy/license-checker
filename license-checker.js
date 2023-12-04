@@ -2,7 +2,7 @@ const fs = require('fs')
 const githubActions = require('@actions/core')
 const path = require('path')
 const checker = require('license-checker-rseidelsohn')
-const packageJSON = require(path.join(process.cwd(), 'package.json'))
+const packageJSON = require('./package.json'))
 
 const EXCLUDE_PREFIX = githubActions.getInput('exclude_prefix', {
   required: false,
@@ -27,7 +27,7 @@ const getLicenses = () =>
   new Promise((resolve, reject) => {
     checker.init(
       {
-        start: process.cwd(),
+        start: './',
       },
       (err, packages) => {
         if (err) {
