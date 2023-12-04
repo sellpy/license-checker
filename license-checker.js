@@ -4,6 +4,8 @@ const path = require('path')
 const checker = require('license-checker-rseidelsohn')
 const packageJSON = require('./package.json')
 
+githubActions.info(`${process.env.GITHUB_WORKSPACE}`)
+
 const EXCLUDE_PREFIX = githubActions.getInput('exclude_prefix', {
   required: false,
 })
