@@ -8,6 +8,8 @@ This action extracts licence information for all installed packages. It is confi
 
 Place in a `.yml` file such as this one in your `.github/workflows` folder. [Refer to the documentation on workflow YAML syntax here.](https://help.github.com/en/articles/workflow-syntax-for-github-actions)
 
+Packages have to be installerd to the root working directory in folder `node_modules`. If the option `direct_dependencies_only` is used the `package.json` file also has to be present in the root.
+
 ```yaml
 name: Extract license data
 
@@ -18,6 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+      - name: Clean npm install
+        run: npm ci
       - uses: sellpy/license-checker@main
         with:
           exclude_prefix: '@sellpy'
