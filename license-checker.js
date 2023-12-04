@@ -57,4 +57,7 @@ getLicenses().then((packages) => {
   )
   githubActions.setOutput('packages_license_data_file_path', OUTPUT_FILE_PATH);
 })
+.catch((error) => {
+  githubActions.setFailed(error.message)
+})
 
