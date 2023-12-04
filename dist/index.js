@@ -51421,13 +51421,6 @@ const OMIT_PACKAGE_VERSIONS = githubActions.getInput('omit_package_versions', {
 const OUTPUT_FILE_PATH = githubActions.getInput('output_file_path', {
   required: false,
 })
-const pathToPackageJSON = path.join(process.env.GITHUB_WORKSPACE, 'package.json')
-
-githubActions.info(`Reading "${pathToPackageJSON}"`)
-const packageJSON = JSON.parse(fs.readFileSync(pathToPackageJSON))
-
-const directDependencies = [...Object.keys(packageJSON.dependencies), ...Object.keys(packageJSON.devDependencies)]
-githubActions.info(`${directDependencies.length} ${JSON.stringify(packageJSON, null, 2)}`)
 
 const getLicenses = () =>
   new Promise((resolve, reject) => {
@@ -51455,6 +51448,11 @@ getLicenses().then((packages) => {
     githubActions.info(`Excluding packages with prefix "${EXCLUDE_PREFIX}". ${packageNames.length} packages remaining.`)
   }
   if (DIRECT_DEPENDENCIES_ONLY) {
+    const pathToPackageJSON = path.join(process.env.GITHUB_WORKSPACE, 'package.json')
+    githubActions.info(`Reading "${pathToPackageJSON}"`)
+    const packageJSON = JSON.parse(fs.readFileSync(pathToPackageJSON))
+    const directDependencies = [...Object.keys(packageJSON.dependencies), ...Object.keys(packageJSON.devDependencies)]
+    githubActions.info(`${directDependencies.length} ${JSON.stringify(packageJSON, null, 2)}`)
     packageNames = packageNames.filter((packageName) => directDependencies.includes(stripPackageVersion(packageName)))
     githubActions.info(`Only including direct dependencies. ${packageNames.length} packages remaining.`, )
   }
@@ -51463,7 +51461,7 @@ getLicenses().then((packages) => {
       filteredPackages[outputPackageName] = packages[packageName]
       return filteredPackages
     }, {})
-  githubActions.info(`Compiled package licence data for ${Object.keys(licenceInfo).length} packages`)
+  githubActions.info(`Compiled packages licence data for ${Object.keys(licenceInfo).length} packages`)
   githubActions.info('Writing packages license data to ' + OUTPUT_FILE_PATH)
   fs.writeFileSync(
     OUTPUT_FILE_PATH,
