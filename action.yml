@@ -19,9 +19,9 @@ inputs:
     required: false
   outputs:
     packages_license_data_file_path:
-      description: 'path to output file'
+      description: 'path to output file. given that an output_file_path was provided'
     packages_license_data:
-      description: 'json stringified license data for all packages'
+      description: 'json stringified license data for all packages. Given that an output_file_path was not provided'
 runs:
   using: 'node20'
   main: 'dist/index.js'
