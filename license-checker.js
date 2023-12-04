@@ -2,7 +2,6 @@ const fs = require('fs')
 const githubActions = require('@actions/core')
 const path = require('path')
 const checker = require('license-checker-rseidelsohn')
-const packageJSON = require(path.join(process.env.GITHUB_WORKSPACE, 'package.json'))
 
 const EXCLUDE_PREFIX = githubActions.getInput('exclude_prefix', {
   required: false,
@@ -19,6 +18,10 @@ const OMIT_PACKAGE_VERSIONS = githubActions.getInput('omit_package_versions', {
 const OUTPUT_FILE_PATH = githubActions.getInput('output_file_path', {
   required: false,
 })
+const pathToPackageJSON = path.join(process.env.GITHUB_WORKSPACE, 'package.json')
+
+githubActions.info(`Reading "${pathToPackageJSON}"`)
+const packageJSON = JSOn.parse(fs.readFileSync(pathToPackageJSON))
 
 const directDependencies = [...Object.keys(packageJSON.dependencies), ...Object.keys(packageJSON.devDependencies)]
 githubActions.info(`${directDependencies.length} ${JSON.stringify(packageJSON, null, 2)}`)
