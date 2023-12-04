@@ -44,12 +44,12 @@ getLicenses().then((packages) => {
   githubActions.info(`Extracted license data for ${Object.keys(packages).length} packages`)
   let packageNames = Object.keys(packages)
   if (EXCLUDE_PREFIX) {
-    githubActions.info('Excluding packages with prefix:' + EXCLUDE_PREFIX)
     packageNames = packageNames.filter((packageName) => !packageName.startsWith(EXCLUDE_PREFIX))
+    githubActions.info(`Excluding packages with prefix "${EXCLUDE_PREFIX}". ${packageNames.length} packages remaining.`)
   }
   if (DIRECT_DEPENDENCIES_ONLY) {
-    githubActions.info('Only including direct dependencies')
     packageNames = packageNames.filter((packageName) => directDependencies.includes(stripPackageVersion(packageName)))
+    githubActions.info(`Only including direct dependencies. ${packageNames.length} packages remaining.`, )
   }
   const licenceInfo = packageNames.reduce((filteredPackages, packageName) => {
       const outputPackageName = OMIT_PACKAGE_VERSIONS ? stripPackageVersion(packageName) : packageName
