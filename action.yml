@@ -8,13 +8,11 @@ inputs:
   direct_dependencies_only:
     type: 'boolean'
     description: 'only include direct dependencies'
-    required: false
-    default: false
+    required: true
   omit_package_versions:
     type: 'boolean'
     description: 'omit package versions in output'
-    required: false
-    default: false
+    required: true
   output_file_path:
     type: 'string'
     description: 'path to output file (needs to use file extension .json)'

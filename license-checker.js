@@ -8,11 +8,11 @@ const EXCLUDE_PREFIX = githubActions.getInput('exclude_prefix', {
 })
 
 const DIRECT_DEPENDENCIES_ONLY = githubActions.getInput('direct_dependencies_only', {
-  required: false,
+  required: true,
 })
 
 const OMIT_PACKAGE_VERSIONS = githubActions.getInput('omit_package_versions', {
-  required: false,
+  required: true,
 })
 
 const OUTPUT_FILE_PATH = githubActions.getInput('output_file_path', {
