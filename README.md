@@ -29,6 +29,8 @@ jobs:
       - uses: sellpy/license-checker@main
         with:
           exclude_prefix: '@sellpy'
+          direct_dependencies_only: true
+          omit_package_versions: true
           output_file_path: 'packages-license-data.json'
 ```
 ## Action inputs
