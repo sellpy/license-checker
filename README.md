@@ -1,4 +1,4 @@
-# Github action - License checker
+# License checker action
 
 This action extracts licence information for all installed packages. It is configurable to exclude all indirect dependencies as well as excluding by name prefix.
 
