@@ -36,6 +36,6 @@ jobs:
 | Name                       | Required | Default value                | Description |
 |----------------------------|----------|------------------------------|-------------|
 | `exclude_prefix`           | -        | -                            | Exclude packages from license check by giving a prefix. |
-| `direct_dependencies_only` | -        | `false`                      | Only include direct dependencies. |
-| `omit_package_versions`    | -        | `false`                      | Omit package versions in output. |
+| `direct_dependencies_only` | ✔️        | -                            | Only include direct dependencies. |
+| `omit_package_versions`    | ✔️        | -                            | Omit package versions in output. |
 | `output_file_path`         | -        | "packages-license-info.json" | Path to output file (needs to use file extension .json). |
